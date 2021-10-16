@@ -32,7 +32,7 @@ function Plateau() {
           col.map((pos, key) => (
             <div key={key} className="grid grid-rows-10">
               {pos.map((value, key) => (
-                <div className="m-1">
+                <div key={key} className="m-1">
                   <Case
                     askPos={askPos}
                     key={key}
