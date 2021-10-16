@@ -4,7 +4,7 @@ import Pion from "./Pion"
 
 function Case({ position, color, pion = false, askPos }) {
   return (
-    <button
+    <div
       className={classNames(
         "p-2 w-full flex justify-center",
         { "bg-yellow-300": color % 2 == 0 },
@@ -16,7 +16,7 @@ function Case({ position, color, pion = false, askPos }) {
       ) : (
         <p className="text-center uppercase w-6 h-6 text-xs font-light">{position}</p>
       )}
-    </button>
+    </div>
   )
 }
 

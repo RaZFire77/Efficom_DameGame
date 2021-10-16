@@ -1,32 +1,32 @@
-import React, { useState } from "react"
+import React, { useEffect, useState, useCallback, useReducer } from "react"
 import Case from "./Case"
 import generateTab from "../constants/gridpos"
 import initialState from "../constants/initialState"
 
 function Plateau() {
   const grid = generateTab()
+
+  const forceUpdate = useReducer(() => ({}))[1]
   const [posArray, setPosArray] = useState(initialState)
 
   const askPos = (color, position) => {
     const value = prompt("Ou voulez vous aller ?")
 
-    if (color === "white") {
-      // setPosArray({ ...posArray, white: posArray.white.push(value) })
-      posArray.white[posArray.white.find(x => x === position)] = value
+    if (value && color === "white") {
+      const newPosArray = posArray
+      newPosArray.white[posArray.white.indexOf(posArray.white.find(x => x === position))] = value
+      setPosArray(newPosArray)
+      forceUpdate()
+    } else if (value && color === "black") {
+      const newPosArray = posArray
+      newPosArray.black[posArray.black.indexOf(posArray.black.find(x => x === position))] = value
+      setPosArray(newPosArray)
+      forceUpdate()
     }
-  }
-
-  const setPos = (state, value) => {
-    if (state.black.includes(value)) {
-      return "black"
-    } else if (state.white.includes(value)) {
-      return "white"
-    }
-    return false
   }
 
   return (
-    <div className="bg-yellow-800 w-full md:w-1/2 mx-auto p-2 ">
+    <div key={posArray} className="bg-yellow-800 w-full md:w-1/2 mx-auto p-2 ">
       <div className="grid grid-cols-10">
         {grid.map(col =>
           col.map((pos, key) => (
@@ -38,7 +38,13 @@ function Plateau() {
                     key={key}
                     color={key}
                     position={value}
-                    pion={setPos(posArray, value)}
+                    pion={
+                      posArray.black.includes(value)
+                        ? "black"
+                        : posArray.white.includes(value)
+                        ? "white"
+                        : false
+                    }
                   />
                 </div>
               ))}
