@@ -10,7 +10,7 @@ function Plateau() {
   const [posArray, setPosArray] = useState(initialState)
 
   const askPos = (color, position) => {
-    const value = prompt("Ou voulez vous aller ?")
+    const value = prompt("Dans quelle case voulez vous allez ?")
 
     if (value && color === "white") {
       const newPosArray = posArray
